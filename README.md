@@ -1,4 +1,44 @@
 # GroceryApp sprint4 Studentversie  
+## Single Responsibility Principle (SRP)
+
+Dit project past het **Single Responsibility Principle (SRP)** toe, één van de SOLID-principes.  
+SRP stelt dat elke klasse of module slechts **één reden tot verandering** mag hebben.  
+Door slimme abstrahering en een duidelijke scheiding van verantwoordelijkheden blijft de codebase overzichtelijk, uitbreidbaar en testbaar.
+
+### Toepassing in dit project
+- **ViewModels (in `Grocery.App/ViewModels`)**  
+  Elke ViewModel is verantwoordelijk voor de logica van één specifiek scherm.  
+  → UI-logica blijft gescheiden van businesslogica en datalaag.  
+
+- **Models (in `Grocery.Core/Models`)**  
+  Definiëren de kernobjecten van de applicatie, zoals producten of boodschappenlijsten.  
+  → Ze bevatten geen logica voor data-opslag of UI-weergave.  
+
+- **Services (in `Grocery.Core/Services`)**  
+  Bevatten de business rules en operaties die losstaan van infrastructuur.  
+  → Maken gebruik van interfaces om afhankelijkheden te minimaliseren.  
+
+- **Repositories (in `Grocery.Core.Data/Repositories`)**  
+  Verantwoordelijk voor data-opslag en communicatie met externe bronnen.  
+  → Implementeren interfaces gedefinieerd in `Core`, zodat business rules onafhankelijk blijven.  
+
+### Documentatie van keuzes
+- **Scheiding van lagen**  
+  Door de opdeling in *App*, *Core* en *Core.Data* is er een duidelijke afbakening van verantwoordelijkheden.  
+  UI kent alleen de ViewModels, die afhankelijk zijn van services en interfaces uit de Core.  
+
+- **Slimme abstrahering via interfaces**  
+  Interfaces in `Core/Interfaces` zorgen ervoor dat de business logica niet afhankelijk is van specifieke data-opslag.  
+  Hierdoor kunnen repositories gemakkelijk vervangen of uitgebreid worden.  
+
+- **Testbaarheid**  
+  Dankzij SRP en abstrahering kunnen onderdelen geïsoleerd getest worden (`TestCore`).  
+  Bijvoorbeeld: services kunnen getest worden met mock-repositories.  
+
+### Voordelen
+- Duidelijkheid in verantwoordelijkheden.  
+- Minder kans op onverwachte neveneffecten bij wijzigingen.  
+- Betere testbaarheid en onderhoudbaarheid.  
 
 ## Clean Architecture
 
