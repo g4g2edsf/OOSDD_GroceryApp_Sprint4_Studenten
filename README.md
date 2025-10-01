@@ -1,5 +1,27 @@
 # GroceryApp sprint4 Studentversie  
 
+## Clean Architecture
+
+In dit project is **Clean Architecture** toegepast om de codebase overzichtelijk, testbaar en uitbreidbaar te houden. Clean Architecture draait om een duidelijke scheiding van verantwoordelijkheden, waarbij afhankelijkheden altijd van buiten naar binnen wijzen (UI → Domain → Data).  
+
+De lagen in dit project zijn als volgt ingericht:
+
+- **Grocery.App (Presentation Layer)**  
+  Bevat de UI en ViewModels (MAUI). Deze laag is verantwoordelijk voor de interactie met de gebruiker en het tonen van data.  
+
+- **Grocery.Core (Domain Layer)**  
+  Dit is de kern van de applicatie. Hier bevinden zich de **Models**, **Interfaces** en **Services** die de business rules bevatten. Deze laag is onafhankelijk van externe frameworks en infrastructuur.  
+
+- **Grocery.Core.Data (Data Layer)**  
+  Hier zitten de **Repositories** en implementaties voor data-opslag en communicatie met externe bronnen. Deze laag implementeert de interfaces die gedefinieerd zijn in `Grocery.Core`.  
+
+### Voordelen van Clean Architecture
+- **Testbaarheid** → Business logica kan eenvoudig getest worden zonder afhankelijkheden van UI of database.  
+- **Onderhoudbaarheid** → Wijzigingen in de UI of data-opslag hebben geen directe impact op de kern van de applicatie.  
+- **Schaalbaarheid** → Nieuwe features of databronnen kunnen worden toegevoegd door simpelweg nieuwe implementaties toe te voegen.  
+
+
+
 ## UC10 Productaantal in boodschappenlijst
 Aanpassingen zijn compleet.
 
