@@ -49,7 +49,7 @@ De lagen in dit project zijn als volgt ingericht:
 - **Grocery.App (Presentation Layer)**  
   Bevat de UI en ViewModels (MAUI). Deze laag is verantwoordelijk voor de interactie met de gebruiker en het tonen van data.  
 
-- **Grocery.Core (Domain Layer)**  
+- **Grocery.Core (Business Layer)**  
   Dit is de kern van de applicatie. Hier bevinden zich de **Models**, **Interfaces** en **Services** die de business rules bevatten. Deze laag is onafhankelijk van externe frameworks en infrastructuur.  
 
 - **Grocery.Core.Data (Data Layer)**  
