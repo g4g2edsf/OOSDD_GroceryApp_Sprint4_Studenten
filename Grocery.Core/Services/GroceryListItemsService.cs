@@ -98,6 +98,7 @@ namespace Grocery.Core.Services
             {
                 Debug.WriteLine($"\n {product.ranking}: {product.Name}, {product.Id}, {product.NrOfSells}"); // debugregel om te kijken of de juiste producten in de lijst zitten
             }
+            Debug.WriteLine("Bestverkopende producten opgehaald!");
             return gesorteerdeItems;
         }
 
