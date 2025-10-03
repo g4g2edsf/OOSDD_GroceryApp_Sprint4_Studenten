@@ -1,4 +1,5 @@
-﻿using Grocery.Core.Interfaces.Repositories;
+﻿using System.Diagnostics;
+using Grocery.Core.Interfaces.Repositories;
 using Grocery.Core.Interfaces.Services;
 using Grocery.Core.Models;
 
@@ -49,9 +50,56 @@ namespace Grocery.Core.Services
             return _groceriesRepository.Update(item);
         }
 
-        public List<BestSellingProducts> GetBestSellingProducts(int topX = 5)
-        {
-            throw new NotImplementedException();
+        public List<BestSellingProducts> GetBestSellingProducts(int topX = 5) // Geeft de topX aantal bestverkopende producten
+        {   
+            // Maak een lijst en voeg alle prucducten met een vooraad hieraan toe
+            List<GroceryListItem> valideProducten = new();
+            foreach (GroceryListItem item in _groceriesRepository.GetAll())
+            {
+                if (item.Amount > 0)
+                {
+                    valideProducten.Add(item);
+                }
+            }
+            
+            // Pak de 5 best verkochte producten
+            var productSales = valideProducten
+                .GroupBy(item => item.ProductId)
+                .Select(group => new
+                {
+                    ProductId = group.Key,
+                    TotalSold = group.Sum(item => item.Amount)
+                })
+                .OrderByDescending(x => x.TotalSold)
+                .Take(topX)
+                .ToList();
+            
+            List<BestSellingProducts> gesorteerdeItems = new();
+            int rank = 1;
+            
+            // Maak van de producten BestSellingProducts met een ranking
+            foreach (var productSale in productSales)
+            {
+                Product product = _productRepository.Get(productSale.ProductId);
+                if (product != null)
+                {
+                    gesorteerdeItems.Add(new BestSellingProducts(
+                        product.Id,
+                        product.Name, 
+                        product.Stock,
+                        productSale.TotalSold,
+                        rank
+                    ));
+                    rank++;
+                }
+            }
+
+            foreach (var product in gesorteerdeItems)
+            {
+                Debug.WriteLine($"\n {product.ranking}: {product.Name}, {product.Id}, {product.NrOfSells}"); // debugregel om te kijken of de juiste producten in de lijst zitten
+            }
+            Debug.WriteLine("Bestverkopende producten opgehaald!");
+            return gesorteerdeItems;
         }
 
         private void FillService(List<GroceryListItem> groceryListItems)
