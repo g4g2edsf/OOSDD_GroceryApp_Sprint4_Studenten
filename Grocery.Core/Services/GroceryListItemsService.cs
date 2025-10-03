@@ -50,8 +50,9 @@ namespace Grocery.Core.Services
             return _groceriesRepository.Update(item);
         }
 
-        public List<BestSellingProducts> GetBestSellingProducts(int topX = 5)
+        public List<BestSellingProducts> GetBestSellingProducts(int topX = 5) // Geeft de topX aantal bestverkopende producten
         {   
+            // Maak een lijst en voeg alle prucducten met een vooraad hieraan toe
             List<GroceryListItem> valideProducten = new();
             foreach (GroceryListItem item in _groceriesRepository.GetAll())
             {
@@ -61,6 +62,7 @@ namespace Grocery.Core.Services
                 }
             }
             
+            // Pak de 5 best verkochte producten
             var productSales = valideProducten
                 .GroupBy(item => item.ProductId)
                 .Select(group => new
@@ -74,7 +76,8 @@ namespace Grocery.Core.Services
             
             List<BestSellingProducts> gesorteerdeItems = new();
             int rank = 1;
-    
+            
+            // Maak van de producten BestSellingProducts met een ranking
             foreach (var productSale in productSales)
             {
                 Product product = _productRepository.Get(productSale.ProductId);
@@ -88,8 +91,12 @@ namespace Grocery.Core.Services
                         rank
                     ));
                     rank++;
-                    Debug.Write(product.Name);
                 }
+            }
+
+            foreach (var product in gesorteerdeItems)
+            {
+                Debug.WriteLine($"\n {product.ranking}: {product.Name}, {product.Id}, {product.NrOfSells}"); // debugregel om te kijken of de juiste producten in de lijst zitten
             }
             return gesorteerdeItems;
         }
